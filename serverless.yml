@@ -1,0 +1,34 @@
+# Welcome to serverless. Read the docs
+# https://serverless.com/framework/docs/
+
+# Serverless.yml is the configuration the CLI
+# uses to deploy your code to your provider of choice
+
+# The `service` block is the name of the service
+service: service-registry
+
+# The `provider` block defines where your service will be deployed
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+# The `functions` block defines what code to deploy
+functions:
+  root:
+    handler: handler.root
+    # The `events` block defines how to trigger the handler.helloWorld code
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+
+custom:
+  customDomain:
+    domainName: <registered_domain_name>
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
+plugins:
+  - serverless-domain-manager
